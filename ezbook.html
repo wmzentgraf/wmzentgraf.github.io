@@ -23,6 +23,7 @@
             margin-bottom: 10px;
             /* Prevents dragging the image to the desktop */
             -webkit-user-drag: none;
+            user-drag: none;
             /* Disables pointer events like right-click on the image element itself */
             pointer-events: none; 
         }
@@ -69,15 +70,20 @@
             event.preventDefault();
         });
 
-        // Intercepts and blocks common keyboard shortcuts for Print, Save, and Copy
+        document.addEventListener('dragstart', event => {
+            event.preventDefault();
+        });
+
+        // Intercepts and blocks common keyboard shortcuts for Print, Save, Copy, and View Source
         document.addEventListener('keydown', event => {
-            const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+            const isMac = /Mac|iPhone|iPad|iPod/.test(navigator.platform);
             const modifier = isMac ? event.metaKey : event.ctrlKey;
 
-            if (modifier && (event.key === 'p' || event.key === 's' || event.key === 'c')) {
+            if (modifier && ['p', 's', 'c', 'u'].includes(event.key.toLowerCase())) {
                 event.preventDefault();
             }
         });
+        
     </script>
 
 </body>
