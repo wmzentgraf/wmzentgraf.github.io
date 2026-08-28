@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comic</title>
+    <style>
+        body {
+            background-color: #121212;
+            margin: 0;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Prevents text and general selection */
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .comic-page {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+            /* Prevents dragging the image to the desktop */
+            -webkit-user-drag: none;
+            /* Disables pointer events like right-click on the image element itself */
+            pointer-events: none; 
+        }
+
+        .page-container {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Completely blanks the page if a print dialog is forced open */
+        @media print {
+            html, body {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="comic-container"></div>
+
+    <script>
+        const totalPages = 23;
+        const container = document.getElementById('comic-container');
+
+        for (let i = 1; i <= totalPages; i++) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'page-container';
+
+            const img = document.createElement('img');
+            // Adjust this if your files are .png or named differently
+            img.src = `book/${i}.jpg`; 
+            img.className = 'comic-page';
+            img.alt = `Page ${i}`;
+
+            wrapper.appendChild(img);
+            container.appendChild(wrapper);
+        }
+
+        // Disables the right-click context menu entirely
+        document.addEventListener('contextmenu', event => {
+            event.preventDefault();
+        });
+
+        // Intercepts and blocks common keyboard shortcuts for Print, Save, and Copy
+        document.addEventListener('keydown', event => {
+            const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+            const modifier = isMac ? event.metaKey : event.ctrlKey;
+
+            if (modifier && (event.key === 'p' || event.key === 's' || event.key === 'c')) {
+                event.preventDefault();
+            }
+        });
+    </script>
+
+</body>
+</html>
