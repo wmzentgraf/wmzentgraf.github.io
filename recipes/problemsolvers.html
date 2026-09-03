@@ -26,6 +26,46 @@
             border-bottom: 2px solid #eee;
             padding-bottom: 10px;
         }
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f1f5f9;
+            border-radius: 6px;
+        }
+        .chooser-label {
+            font-weight: bold;
+            color: #34495e;
+        }
+        .yield-chooser {
+            display: flex;
+            background: #fff;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .yield-chooser label {
+            padding: 8px 16px;
+            cursor: pointer;
+            border-right: 1px solid #cbd5e1;
+            transition: background 0.2s;
+        }
+        .yield-chooser label:last-child {
+            border-right: none;
+        }
+        .yield-chooser input[type="radio"] {
+            display: none;
+        }
+        .yield-chooser input[type="radio"]:checked + span {
+            font-weight: bold;
+            color: #0f172a;
+        }
+        .yield-chooser label:has(input[type="radio"]:checked) {
+            background-color: #e2e8f0;
+        }
         h2 {
             color: #34495e;
             margin-top: 30px;
@@ -40,8 +80,20 @@
             border-bottom: 1px solid #eee;
         }
         td:first-child {
-            width: 30%;
+            width: 45%;
+            text-align: left;
+            padding-left: 20%;
+            padding-right: 15px;
             font-weight: bold;
+            white-space: nowrap;
+        }
+        td:first-child input[type="checkbox"] {
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        td:last-child {
+            width: 55%;
+            text-align: left;
         }
         .note {
             font-style: italic;
@@ -54,21 +106,35 @@
         .step {
             margin-bottom: 25px;
         }
+        input[type="checkbox"] {
+            transform: scale(1.2);
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Geo’s Problem-Solver Cookies</h1>
 
+        <div class="controls">
+            <span class="chooser-label">Yield:</span>
+            <div class="yield-chooser">
+                <label><input type="radio" name="yield" value="9"><span>9</span></label>
+                <label><input type="radio" name="yield" value="18"><span>18</span></label>
+                <label><input type="radio" name="yield" value="36" checked><span>36</span></label>
+                <label><input type="radio" name="yield" value="54"><span>54</span></label>
+            </div>
+        </div>
+
         <div class="step">
             <h2>1. Start</h2>
             <p>Cream together on high-speed for 2 minutes:</p>
             <table>
-                <tr><td>200 g</td><td>Organic cane sugar</td></tr>
-                <tr><td>105 g</td><td>Light brown sugar</td></tr>
-                <tr><td>105 g</td><td>Dark brown sugar</td></tr>
-                <tr><td>113 g (1 stick)</td><td>Unsalted butter, melted and browned to 100g</td></tr>
-                <tr><td>113 g (1 stick)</td><td>Unsalted butter, cold and chopped into small cubes</td></tr>
+                <tr><td><input type="checkbox" class="persist-cb" id="ing-1"><span class="qty" data-base="200">200</span> g</td><td>Organic cane sugar</td></tr>
+                <tr><td><input type="checkbox" class="persist-cb" id="ing-2"><span class="qty" data-base="105">105</span> g</td><td>Light brown sugar</td></tr>
+                <tr><td><input type="checkbox" class="persist-cb" id="ing-3"><span class="qty" data-base="105">105</span> g</td><td>Dark brown sugar</td></tr>
+                <tr><td><input type="checkbox" class="persist-cb" id="ing-4"><span class="qty" data-base="113">113</span> g (<span class="qty" data-base="1">1</span> stick)</td><td>Unsalted butter, melted and browned to <span class="qty" data-base="100">100</span>g</td></tr>
+                <tr><td><input type="checkbox" class="persist-cb" id="ing-5"><span class="qty" data-base="113">113</span> g (<span class="qty" data-base="1">1</span> stick)</td><td>Unsalted butter, cold and chopped into small cubes</td></tr>
             </table>
             <div class="note">If vegan, substitute warm butter for coconut oil and cold butter for your preferred brand of plant-based butter, cubed.</div>
         </div>
@@ -77,53 +143,92 @@
             <h2>2. Wet Ingredients</h2>
             <p>Add and mix 30 seconds:</p>
             <table>
-                <tr><td>2</td><td>Eggs</td></tr>
-                <tr><td>1 tbl</td><td>Vanilla</td></tr>
+                <tr><td><input type="checkbox" class="persist-cb" id="ing-6"><span class="qty" data-base="2">2</span></td><td>Eggs</td></tr>
+                <tr><td><input type="checkbox" class="persist-cb" id="ing-7"><span class="qty" data-base="1">1</span> tbl</td><td>Vanilla</td></tr>
             </table>
-            <div class="note">If vegan, substitute eggs for 1/4 c unsweetened applesauce.</div>
+            <div class="note">If vegan, substitute eggs for unsweetened applesauce (1/4 cup aka 2 oz aka 4 tbl == 1 egg in most dessert baking).</div>
         </div>
 
         <div class="step">
             <h2>3. Dry Ingredients</h2>
-            <p>Add (all whisked together), and fold by-hand just until you don’t see any white:</p>
+            <p>Add (all whisked together first), and fold by-hand just until you don’t see any white:</p>
             <table>
-                <tr><td>360 g (3 c)</td><td>All-purpose flour</td></tr>
-                <tr><td>120 g (1 c)</td><td>Cake flour</td></tr>
-                <tr><td>1 tbl</td><td>Cornstarch</td></tr>
-                <tr><td>2 tea</td><td>Baking powder</td></tr>
-                <tr><td>2 tea</td><td>Baking soda</td></tr>
-                <tr><td>1 tea</td><td>Fine salt</td></tr>
+                <tr><td><input type="checkbox" class="persist-cb" id="ing-8"><span class="qty" data-base="360">360</span> g (<span class="qty" data-base="3">3</span> c)</td><td>All-purpose flour</td></tr>
+                <tr><td><input type="checkbox" class="persist-cb" id="ing-9"><span class="qty" data-base="120">120</span> g (<span class="qty" data-base="1">1</span> c)</td><td>Cake flour</td></tr>
+                <tr><td><input type="checkbox" class="persist-cb" id="ing-10"><span class="qty" data-base="1">1</span> tbl</td><td>Cornstarch</td></tr>
+                <tr><td><input type="checkbox" class="persist-cb" id="ing-11"><span class="qty" data-base="2">2</span> tea</td><td>Baking powder</td></tr>
+                <tr><td><input type="checkbox" class="persist-cb" id="ing-12"><span class="qty" data-base="2">2</span> tea</td><td>Baking soda</td></tr>
+                <tr><td><input type="checkbox" class="persist-cb" id="ing-13"><span class="qty" data-base="1">1</span> tea</td><td>Fine salt</td></tr>
             </table>
         </div>
 
         <div class="step">
             <h2>4. Chocolate Chips</h2>
-            <p>Add 1.5-2 cups chocolate chips, about a bag (semi-sweet) and a half bag (dark), save the other half bag. There is such a thing as too many chocolate chips in the dough and each cookie gets more later.</p>
+            <p>Add <span class="qty" data-base="1.5">1.5</span>-<span class="qty" data-base="2">2</span> cups chocolate chips, about a bag (semi-sweet) and a half bag (dark), save the other half bag. There is such a thing as too many chocolate chips in the dough and each cookie gets more later.</p>
         </div>
 
         <div class="step">
-            <h2>4. Refridgerate & Pre-Heat</h2>
+            <h2>5. Refridgerate & Pre-Heat</h2>
             <p>Put the dough in an airtight container and refridgerate ~20 minutes.</p>
-            <p>Set your oven to 350F/177C (325F/108C if convection, which is preferred).</p>
+            <p>Set your oven to 350F/177C before you start cleaning up.</p>
+            <div class="note">325F/108C if convection, which is preferred for nearly all baking.</div>
         </div>
 
         <div class="step">
             <h2>6. Baking</h2>
-            <p> Measure balls of dough, 33-36g, roll, place on parchment paper. Firmly press 3 chocolate chips into center of cookie. Sprinkle the dimple with coarse salt.</p>
-            <p>Freeze the tray (with the cookies) for 5-10 minutes!</p>
-            <p>Bake, ~8-10 min, remove the moment the edges are light brown, easy to over bake, they’re done when you smell them in another room. If you went to 11 min you burnt them or your oven isn’t actually 350F/177C.</p>
+            <p> Measure balls of dough, 33-36g, roll, place on parchment paper. Firmly press 3 chocolate chips into center of cookie.</p>
+            <div class="note">Freeze the tray (with the cookies) for 5-10 minutes! Then sprinkle the dimple with coarse salt.</div>
+            <p>Bake, ~8-10 min, remove the moment the edges are light brown, easy to over bake, they’re done when you smell them in another room.</p> 
+            <div class="note">If you went beyond 11 min 11 sec you burnt them or your oven isn’t actually the number it says it is.</div>
         </div>
 
         <div class="step">
             <h2>7. The Smack</h2>
-            <p>When removing the cookies, firmly grip one end of the pan and smack the cookies down on a hard safe surface, twice. This should flatten the puffy middle making for the best chewy texture.</p>
+            <p>When removing the cookies, firmly grip one end of the pan and smack/drop the cookies down on a hard safe surface (NOT A GLASS TOP), once. This should flatten the puffy middle making for the best chewy texture.</p>
         </div>
 
         <div class="step">
             <h2>8. Cooling & Storage</h2>
             <p>Let cool on pan 5-10 min, then transfer to rack, store in sealed container.</p>
-            <div class="note">Refrigerate leftover cookie dough in sealed container, let dough come to room temperature before following baking instructions above.</div>
+            <div class="note">Refrigerate leftover cookie dough in sealed container, shape cookies while dough is cold.</div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // LocalStorage for checkboxes
+            const checkboxes = document.querySelectorAll('.persist-cb');
+            checkboxes.forEach(cb => {
+                const savedState = localStorage.getItem('geoCookieCb_' + cb.id);
+                if (savedState === 'true') {
+                    cb.checked = true;
+                }
+                
+                cb.addEventListener('change', (e) => {
+                    localStorage.setItem('geoCookieCb_' + cb.id, e.target.checked);
+                });
+            });
+
+            // Ingredient scaling logic
+            const radioButtons = document.querySelectorAll('input[name="yield"]');
+            const qtySpans = document.querySelectorAll('.qty');
+
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    const newYield = parseInt(e.target.value);
+                    const ratio = newYield / 36; // 36 is the base yield
+
+                    qtySpans.forEach(span => {
+                        const baseValue = parseFloat(span.getAttribute('data-base'));
+                        let scaledValue = baseValue * ratio;
+                        
+                        // Round to 2 decimal places to keep it clean
+                        scaledValue = Math.round(scaledValue * 100) / 100;
+                        span.textContent = scaledValue;
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>
